@@ -17,15 +17,28 @@ fn main() {
 
     let contents = match read_file(filename){
         Ok(c) => c,
-        Err{e) =>{
+        Err(e) =>{
             eprintln!("Error reading file: {}", e);
             process::exit(1);
-        }}
+        }
     };
 
-    println!("File contents: \n{}", contents);
+    //println!("File contents: \n{}", contents);
+
+    let results = search(query, &contents);
+
+    for line in results{
+        println!("{}", line);
+    } 
 }
 
 fn read_file(filename: &str) -> Result<String, std::io::Error>{
     fs::read_to_string(filename)
+}
+
+fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str>{
+    contents
+        .lines()
+        .filter(|line| line.contains(query))
+        .collect()
 }
