@@ -1,8 +1,14 @@
 use std::fs;
+use clap::Parser;
+
+#[derive(Parser, Debug)]
+#[command(name = "minigrep")]
+#[command(about = "A simple grep tool in Rust", long_about = None)]
 
 pub struct Config{
     pub query: String,
     pub filename: String,
+    #[arg(short, long, env = "IGNORE_CASE")]
     pub case_insensitive: bool,
 }
 
